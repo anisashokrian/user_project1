@@ -1,24 +1,21 @@
-from view.user_view import *
-from view.user_view import *
+import sqlite3
+
+
 def create_table_user():
-    connection = sqlite3.connect("mft_db.db")
+    connection = sqlite3.connect("data_access/mft_db.db")
     cursor = connection.cursor()
-    cursor.execute("insert into users (user_name,password,nick_name,locked) values = (?,?,?,?,)"
-                   [user_name.get(), password.get(), nick_name.get(), locked.get()])
+    cursor.execute(
+        "create table if not exists users (id integer primary key autoincrement, user_name text, password text, nickname text,locked boolean)")
     connection.commit()
     connection.close()
 
 
 def save_user(user_name, password, nickname, locked):
-     connection = sqlite3.connect("mft_db.db")
-     cursor = connection.cursor()
-     cursor.execute("creat table users (id integer, user_name text, password text, nickname text,locked boolean)")
-
-     connection.commit()
-     connection.close()
-
-
-
-
+    connection = sqlite3.connect("data_access/mft_db.db")
+    cursor = connection.cursor()
+    cursor.execute("insert into users (user_name,password,nickname,locked) values (?,?,?,?)",
+                   [user_name, password, nickname, locked])
+    connection.commit()
+    connection.close()
 
 

@@ -1,22 +1,22 @@
 from tkinter import *
 import tkinter.messagebox as msg
-import sqlite3
-from tools.validation import *
+from data_access.database_manager import save_user
 from tools.validation import *
 
 
 def save_button():
     try:
-              person= {"user_name" :user_name.get(), "password" :password.get(), "nick_name" :nick_name.get(), "locked" :locked.get()}
-              person_list.append(person)
-              msg.showinfo("saved",f"person saved\n{person}")
-
-    except EXCEPTION as e:
-        msg.showerror("error",f"{e}")
-    finally:
+        user_name_validator(user_name.get())
+        password_validator(password.get())
+        nick_name_validator(nick_name.get())
+        save_user(user_name.get(), password.get(),nick_name.get(),locked.get())
+        msg.showinfo("saved",f"person saved")
         user_name.set("")
         password.set("")
         nick_name.set("")
+    except Exception as e:
+        msg.showerror("error",f"{e}")
+
 
 window = Tk()
 
